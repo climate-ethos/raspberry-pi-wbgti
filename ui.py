@@ -4,6 +4,21 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+# Animation
+import matplotlib.animation as animation
+from matplotlib import style
+style.use('ggplot')
+
+class limitedList:
+    def __init__(self, size):
+        self.size = size
+    myList = []
+    size = 0
+    def addItem(self, number):
+        self.myList.append(number)
+        if len(self.myList) > self.size:
+            self.myList.pop(0)
+
 
 
 class Root(tk.Tk):
@@ -29,7 +44,7 @@ for i, sensor in enumerate(temperature_sensors):
     label.grid(column=i, row=0)
 
 # setup WBGTI graph
-f = Figure(figsize=(5,5), dpi=100)
+f = Figure()
 a = f.add_subplot(111)
 a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
 
