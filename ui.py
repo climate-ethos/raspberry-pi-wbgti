@@ -1,5 +1,11 @@
 import tkinter as tk
 
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
+
+
 class Root(tk.Tk):
     def __init__(self):
         super(Root,self).__init__()
@@ -23,7 +29,11 @@ for i, sensor in enumerate(temperature_sensors):
     label.grid(column=i, row=0)
 
 # setup WBGTI graph
-username_label = tk.Label(root, text="WBGTI", borderwidth=2)
-username_label.grid(column=0, row=1, columnspan=3)
+f = Figure(figsize=(5,5), dpi=100)
+a = f.add_subplot(111)
+a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+
+canvas = FigureCanvasTkAgg(f, root)
+canvas.get_tk_widget().grid(column=0, row=1, columnspan=3)
 
 root.mainloop()
