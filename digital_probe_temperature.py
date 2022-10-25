@@ -19,7 +19,7 @@ def read_all_temp_raw():
 		f.close()
 	return files
 
-def read_temp():
+def get_temperature_values():
 	files = read_all_temp_raw()
 	temperatures = []
 	for lines in files:
@@ -34,5 +34,5 @@ def read_temp():
 	return temperatures
 
 while True:
-	print(read_temp())
+	print(get_temperature_values())
 	time.sleep(1)
