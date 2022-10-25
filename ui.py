@@ -1,5 +1,7 @@
 import tkinter as tk
 
+import collections
+
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -53,12 +55,16 @@ a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
 canvas = FigureCanvasTkAgg(f, root)
 canvas.get_tk_widget().grid(column=0, row=1, columnspan=3)
 
-def animate(i):
-    xar=[-4, -3, -2, -1]
-    yar=np.random.rand(4)
+last_wbgti_readings = collections.deque(maxlen=10)
+def animate():
+    xar = np.arrange(-10, -1, 1)
+    values = get_temperature_values()
+    last_wbgti_readings.append(calculate_wbgti(values))
+    yar = np.random.rand(4)
     a.clear()
     a.plot(xar,yar)
 
-ani = animation.FuncAnimation(f,animate, interval=5000)
+# TODO: Edit interval (ms) to change sample rate
+ani = animation.FuncAnimation(f, animate, interval=5000)
 
 root.mainloop()
