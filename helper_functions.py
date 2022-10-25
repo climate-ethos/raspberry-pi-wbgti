@@ -1,2 +1,2 @@
-def calculate_wbgt(wet_bulb_temp, globe_temp, dry_bulb_temp):
-	return 0.7 * wet_bulb_temp + 0.2 * globe_temp + 0.1 * dry_bulb_temp
+def calculate_wbgt(sensors):
+	return 0.7 * sensors['wet_bulb_sensor'] + 0.2 * sensors['globe_sensor'] + 0.1 * sensors['dry_bulb_sensor']
