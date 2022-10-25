@@ -13,7 +13,7 @@ style.use('ggplot')
 
 import numpy as np
 
-from digital_probe_temperature import get_temperature_values
+from read_digital_probe_temp import get_temperature_values
 from helper_functions import calculate_wbgt
 
 class limitedList:
