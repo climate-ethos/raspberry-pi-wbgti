@@ -9,6 +9,8 @@ import matplotlib.animation as animation
 from matplotlib import style
 style.use('ggplot')
 
+import numpy as np
+
 class limitedList:
     def __init__(self, size):
         self.size = size
@@ -50,5 +52,13 @@ a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
 
 canvas = FigureCanvasTkAgg(f, root)
 canvas.get_tk_widget().grid(column=0, row=1, columnspan=3)
+
+def animate(i):
+    xar=[-4, -3, -2, -1]
+    yar=np.random.rand(4)
+    a.clear()
+    a.plot(xar,yar)
+
+ani = animation.FuncAnimation(f,animate, interval=5000)
 
 root.mainloop()
