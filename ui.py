@@ -8,7 +8,7 @@ class Root(tk.Tk):
 		super(Root,self).__init__()
 
 		self.title("WBGTI ")
-		self.minsize(500,400)
+		self.minsize(800,480)
 
 		container = tk.Frame(self)
 		container.pack(side="top", fill="both", expand = True)

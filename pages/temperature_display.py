@@ -36,11 +36,12 @@ class TemperatureDisplay(tk.Frame):
 		settingsButton.grid(row=0, column=4)
 
 		# setup WBGTI graph
-		f = Figure()
+		f = Figure(figsize=(10.5,5.5))
 		a = f.add_subplot(111)
 		a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
 
 		canvas = FigureCanvasTkAgg(f, self)
+		canvas.figure.tight_layout()
 		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5)
 
 		last_wbgt_readings = collections.deque(maxlen=10)
