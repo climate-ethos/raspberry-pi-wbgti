@@ -10,8 +10,8 @@ from matplotlib.figure import Figure
 
 import random
 
-# from modules.calculate_wbgt import calculate_wbgt
-# from modules.read_digital_probe_temp import get_temperature_values
+from modules.calculate_wbgt import calculate_wbgt
+from modules.read_digital_probe_temp import get_temperature_values
 
 class TemperatureDisplay(tk.Frame):
 	ax = None
@@ -47,9 +47,8 @@ class TemperatureDisplay(tk.Frame):
 
 	def graph_animate(self, *args):
 		xar = np.arange(-10, 0, 1)
-		# sensor_value_dict = get_temperature_values()
-		# last_wbgt_readings.append(calculate_wbgt(sensor_value_dict))
-		self.last_wbgt_readings.append(random.randint(0,9))
+		sensor_value_dict = get_temperature_values()
+		self.last_wbgt_readings.append(calculate_wbgt(sensor_value_dict))
 		self.ax.clear()
 		self.ax.plot(xar,self.last_wbgt_readings)
 
