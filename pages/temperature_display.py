@@ -35,12 +35,12 @@ class TemperatureDisplay(tk.Frame):
 		settingsButton.grid(row=0, column=4)
 
 		# setup WBGTI graph
-		f = Figure(figsize=(6,4), dpi=100)
+		f = Figure(figsize=(7,4), dpi=100)
 		self.ax = f.add_subplot(111)
 
 		canvas = FigureCanvasTkAgg(f, self)
 		canvas.figure.tight_layout()
-		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5)
+		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5, padx=10, pady=10)
 
 		# TODO: Edit interval (ms) to change sample rate
 		self.graph_animate()
