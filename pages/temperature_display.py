@@ -35,7 +35,7 @@ class TemperatureDisplay(tk.Frame):
 		settingsButton.grid(row=0, column=4)
 
 		# setup WBGTI graph
-		f = Figure(figsize=(10.5,5.5), dpi=100)
+		f = Figure(figsize=(6,4), dpi=100)
 		self.ax = f.add_subplot(111)
 
 		canvas = FigureCanvasTkAgg(f, self)
