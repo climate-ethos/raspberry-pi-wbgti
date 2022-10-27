@@ -28,6 +28,10 @@ class Root(tk.Tk):
 		frame = self.frames[cont]
 		frame.tkraise()
 
+	def get_frame(self, cont):
+		frame = self.frames[cont]
+		return frame
+
 root = Root()
 
 root.mainloop()

@@ -13,9 +13,11 @@ from modules.calculate_wbgt import calculate_wbgt
 from modules.read_digital_probe_temp import get_temperature_values
 
 class TemperatureDisplay(tk.Frame):
+	figure = None
 	ax = None
 	ani = None
 	sensorLabels = []
+	samplingInterval = 1
 	wbgtLabel = None
 	last_wbgt_readings = collections.deque([np.nan] * 10, maxlen=10)
 
@@ -36,18 +38,19 @@ class TemperatureDisplay(tk.Frame):
 		settingsButton.grid(row=0, column=4)
 
 		# setup WBGTI graph
-		f = Figure(figsize=(7,4), dpi=100)
-		self.ax = f.add_subplot(111)
+		self.figure = Figure(figsize=(7,4), dpi=100)
+		self.ax = self.figure.add_subplot(111)
 
-		canvas = FigureCanvasTkAgg(f, self)
+		canvas = FigureCanvasTkAgg(self.figure, self)
 		canvas.figure.tight_layout()
 		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5, padx=15, pady=10)
 
 		# TODO: Edit interval (ms) to change sample rate
 		self.graph_animate()
-		self.ani = animation.FuncAnimation(f, self.graph_animate, interval=5000)
+		self.ani = animation.FuncAnimation(self.figure, self.graph_animate, interval=self.samplingInterval*1000)
 
 	def graph_animate(self, *args):
+		print("Updating graph...")
 		sensor_value_dict = get_temperature_values()
 		# Update sensor labels
 		for index, item in enumerate(sensor_value_dict.items()):
@@ -63,4 +66,16 @@ class TemperatureDisplay(tk.Frame):
 		self.ax.clear()
 		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 		self.ax.plot(xar,self.last_wbgt_readings)
+
+	def get_sampling_interval(self):
+		return self.samplingInterval
+
+	def set_sampling_interval(self, samplingInverval):
+		# TODO: Fix this so it works
+		self.samplingInterval = samplingInverval
+		print(self.samplingInterval)
+		print(self.ani.event_source.interval)
+		self.ani.event_source.interval = self.samplingInterval*1000
+		print(self.ani.event_source.interval)
+
 
