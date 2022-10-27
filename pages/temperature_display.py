@@ -41,7 +41,7 @@ class TemperatureDisplay(tk.Frame):
 
 		canvas = FigureCanvasTkAgg(f, self)
 		canvas.figure.tight_layout()
-		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5, padx=10, pady=10)
+		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5, padx=15, pady=10)
 
 		# TODO: Edit interval (ms) to change sample rate
 		self.graph_animate()
@@ -52,15 +52,15 @@ class TemperatureDisplay(tk.Frame):
 		# Update sensor labels
 		for index, item in enumerate(sensor_value_dict.items()):
 			key, value = item
-			self.sensorLabels[index].configure(text="{}:\n{:2f}℃".format(key, value))
+			self.sensorLabels[index].configure(text="{}:\n{:.2f}℃".format(key, value))
 		# Calculate wbgt
 		wbgtValue = calculate_wbgt(sensor_value_dict)
 		# Update wbgt label
-		self.wbgtLabel.configure(text="WBGT:\n{:2f}℃".format(wbgtValue))
+		self.wbgtLabel.configure(text="WBGT:\n{:.2f}℃".format(wbgtValue))
 		# Update live graph
 		xar = np.arange(-10, 0, 1)
 		self.last_wbgt_readings.append(wbgtValue)
 		self.ax.clear()
-		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
+		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 		self.ax.plot(xar,self.last_wbgt_readings)
 
