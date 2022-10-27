@@ -7,6 +7,7 @@ import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
+from matplotlib.ticker import FormatStrFormatter
 
 from modules.calculate_wbgt import calculate_wbgt
 from modules.read_digital_probe_temp import get_temperature_values
@@ -51,14 +52,15 @@ class TemperatureDisplay(tk.Frame):
 		# Update sensor labels
 		for index, item in enumerate(sensor_value_dict.items()):
 			key, value = item
-			self.sensorLabels[index].configure(text="{}:\n{}℃".format(key, value))
+			self.sensorLabels[index].configure(text="{}:\n{:2f}℃".format(key, value))
 		# Calculate wbgt
 		wbgtValue = calculate_wbgt(sensor_value_dict)
 		# Update wbgt label
-		self.wbgtLabel.configure(text="WBGT:\n{}℃".format(wbgtValue))
+		self.wbgtLabel.configure(text="WBGT:\n{:2f}℃".format(wbgtValue))
 		# Update live graph
 		xar = np.arange(-10, 0, 1)
 		self.last_wbgt_readings.append(wbgtValue)
 		self.ax.clear()
+		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.1f'))
 		self.ax.plot(xar,self.last_wbgt_readings)
 
