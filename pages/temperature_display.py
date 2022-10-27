@@ -8,8 +8,6 @@ matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
-import random
-
 from modules.calculate_wbgt import calculate_wbgt
 from modules.read_digital_probe_temp import get_temperature_values
 

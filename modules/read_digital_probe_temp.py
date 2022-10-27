@@ -36,7 +36,6 @@ def extract_temp_from_lines(lines, id):
 	# If sensor not found or error return NaN
 	return np.nan
 
-
 def get_temperature_values():
 	sensors = {
 		"wet_bulb_sensor": "28-1",
