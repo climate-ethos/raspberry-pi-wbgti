@@ -8,6 +8,7 @@ matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from matplotlib.figure import Figure
 
+import random
 
 # from modules.calculate_wbgt import calculate_wbgt
 # from modules.read_digital_probe_temp import get_temperature_values
@@ -15,6 +16,7 @@ from matplotlib.figure import Figure
 class TemperatureDisplay(tk.Frame):
 	ax = None
 	ani = None
+	last_wbgt_readings = collections.deque([np.nan] * 10, maxlen=10)
 
 	def __init__(self, parent, controller) -> None:
 		tk.Frame.__init__(self, parent)
@@ -39,17 +41,15 @@ class TemperatureDisplay(tk.Frame):
 		canvas.figure.tight_layout()
 		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5)
 
-		# last_wbgt_readings = collections.deque(maxlen=10)
-
 		# TODO: Edit interval (ms) to change sample rate
 		self.graph_animate()
 		self.ani = animation.FuncAnimation(f, self.graph_animate, interval=5000)
 
 	def graph_animate(self, *args):
-		xar = np.arange(-10, -1, 1)
-		yar = np.random.rand(9)
+		xar = np.arange(-10, 0, 1)
 		# sensor_value_dict = get_temperature_values()
 		# last_wbgt_readings.append(calculate_wbgt(sensor_value_dict))
+		self.last_wbgt_readings.append(random.randint(0,9))
 		self.ax.clear()
-		self.ax.plot(xar,yar)
+		self.ax.plot(xar,self.last_wbgt_readings)
 
