@@ -38,9 +38,9 @@ def extract_temp_from_lines(lines, id):
 
 def get_temperature_values():
 	sensors = {
-		"wet_bulb_sensor": "28-1",
-		"globe_sensor": "28-2",
-		"dry_bulb_sensor": "28-3"
+		"wet_bulb_sensor": "28-00000de50c47",
+		"globe_sensor": "28-00000de51070",
+		"dry_bulb_sensor": "28-00000de4ccb3"
 	}
 	for key, value in sensors.items():
 		lines = read_temp_raw(value)
