@@ -9,7 +9,7 @@ class Root(tk.Tk):
 
 		self.title("WBGTI")
 		self.minsize(800,480)
-		self.state("zoomed")
+		self.attributes("-fullscreen", True)
 
 		container = tk.Frame(self)
 		container.pack(side="top", fill="both", expand = True)
