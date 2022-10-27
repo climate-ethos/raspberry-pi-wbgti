@@ -1,5 +1,6 @@
 import collections
 import tkinter as tk
+from matplotlib import animation
 import numpy as np
 
 import matplotlib
@@ -11,15 +12,10 @@ from matplotlib.figure import Figure
 # from modules.calculate_wbgt import calculate_wbgt
 # from modules.read_digital_probe_temp import get_temperature_values
 
-# def animate():
-# 	xar = np.arrange(-10, -1, 1)
-# 	yar = np.random.rand(4)
-# 	sensor_value_dict = get_temperature_values()
-# 	last_wbgt_readings.append(calculate_wbgt(sensor_value_dict))
-# 	a.clear()
-# 	a.plot(xar,yar)
-
 class TemperatureDisplay(tk.Frame):
+	ax = None
+	ani = None
+
 	def __init__(self, parent, controller) -> None:
 		tk.Frame.__init__(self, parent)
 		# Temperature sensor display
@@ -37,15 +33,23 @@ class TemperatureDisplay(tk.Frame):
 
 		# setup WBGTI graph
 		f = Figure(figsize=(10.5,5.5))
-		a = f.add_subplot(111)
-		a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+		self.ax = f.add_subplot(111)
 
 		canvas = FigureCanvasTkAgg(f, self)
 		canvas.figure.tight_layout()
 		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5)
 
-		last_wbgt_readings = collections.deque(maxlen=10)
+		# last_wbgt_readings = collections.deque(maxlen=10)
 
 		# TODO: Edit interval (ms) to change sample rate
-		# ani = animation.FuncAnimation(f, animate, interval=5000)
+		self.graph_animate()
+		self.ani = animation.FuncAnimation(f, self.graph_animate, interval=5000)
+
+	def graph_animate(self, *args):
+		xar = np.arange(-10, -1, 1)
+		yar = np.random.rand(9)
+		# sensor_value_dict = get_temperature_values()
+		# last_wbgt_readings.append(calculate_wbgt(sensor_value_dict))
+		self.ax.clear()
+		self.ax.plot(xar,yar)
 
