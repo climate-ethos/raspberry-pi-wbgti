@@ -7,8 +7,9 @@ class Root(tk.Tk):
 	def __init__(self):
 		super(Root,self).__init__()
 
-		self.title("WBGTI ")
+		self.title("WBGTI")
 		self.minsize(800,480)
+		self.state("zoomed")
 
 		container = tk.Frame(self)
 		container.pack(side="top", fill="both", expand = True)
