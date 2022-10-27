@@ -8,7 +8,6 @@ class Root(tk.Tk):
 		super(Root,self).__init__()
 
 		self.title("WBGTI")
-		self.minsize(800,480)
 		self.attributes("-fullscreen", True)
 
 		container = tk.Frame(self)
