@@ -1,22 +1,23 @@
-import tkinter as tk
-class SettingsPage(tk.Frame):
+from tkinter import ttk
+
+class SettingsPage(ttk.Frame):
 	controller = None
 	intervalInput = None
 
 	def __init__(self, parent, controller) -> None:
-		tk.Frame.__init__(self, parent)
+		ttk.Frame.__init__(self, parent)
 		self.controller = controller
 
-		intervalLabel = tk.Label(self, text="Sampling rate (s):")
+		intervalLabel = ttk.Label(self, text="Sampling rate (s):")
 		intervalLabel.grid(row=1, column=1)
 
-		self.intervalInput = tk.Entry(self)
+		self.intervalInput = ttk.Entry(self)
 		self.intervalInput.grid(row=1, column=2)
 
 		samplingInterval = str(controller.get_frame("TemperatureDisplay").get_sampling_interval())
-		self.intervalInput.insert(tk.END, samplingInterval)
+		self.intervalInput.insert(0, samplingInterval)
 
-		backButton = tk.Button(self, text="Back", command=self.save_and_return)
+		backButton = ttk.Button(self, text="Back", command=self.save_and_return)
 		backButton.grid(row=0, column=0)
 
 	def save_and_return(self):

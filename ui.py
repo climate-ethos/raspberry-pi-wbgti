@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter import ttk
 
 from pages.temperature_display import TemperatureDisplay
 from pages.settings_page import SettingsPage
@@ -8,9 +9,11 @@ class Root(tk.Tk):
 		super(Root,self).__init__()
 
 		self.title("WBGTI")
+		self.tk.call("source", "theme/azure.tcl")
+		self.tk.call("set_theme", "dark")
 		# self.attributes("-fullscreen", True)
 
-		container = tk.Frame(self)
+		container = ttk.Frame(self, padding=10)
 		container.pack(side="top", fill="both", expand = True)
 		container.grid_rowconfigure(0, weight=1)
 		container.grid_columnconfigure(0, weight=1)
