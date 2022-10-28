@@ -20,7 +20,6 @@ class SettingsPage(tk.Frame):
 		backButton.grid(row=0, column=0)
 
 	def save_and_return(self):
-		print("GO BACK")
 		newSamplingInterval = int(self.intervalInput.get())
 		self.controller.get_frame("TemperatureDisplay").set_sampling_interval(newSamplingInterval)
 		self.controller.show_frame("TemperatureDisplay")

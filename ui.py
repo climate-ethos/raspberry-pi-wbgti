@@ -8,7 +8,7 @@ class Root(tk.Tk):
 		super(Root,self).__init__()
 
 		self.title("WBGTI")
-		self.attributes("-fullscreen", True)
+		# self.attributes("-fullscreen", True)
 
 		container = tk.Frame(self)
 		container.pack(side="top", fill="both", expand = True)

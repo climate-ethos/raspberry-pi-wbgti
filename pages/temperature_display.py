@@ -1,6 +1,5 @@
 import collections
 import tkinter as tk
-from matplotlib import animation
 import numpy as np
 
 import matplotlib
@@ -13,6 +12,7 @@ from modules.calculate_wbgt import calculate_wbgt
 from modules.read_digital_probe_temp import get_temperature_values
 
 class TemperatureDisplay(tk.Frame):
+	controller = None
 	figure = None
 	ax = None
 	ani = None
@@ -23,6 +23,7 @@ class TemperatureDisplay(tk.Frame):
 
 	def __init__(self, parent, controller) -> None:
 		tk.Frame.__init__(self, parent)
+		self.controller = controller
 		# Temperature sensor display
 		for i in range(3):
 			label = tk.Label(self, borderwidth=1, relief="solid", padx=10, pady=10)
@@ -47,7 +48,6 @@ class TemperatureDisplay(tk.Frame):
 
 		# TODO: Edit interval (ms) to change sample rate
 		self.graph_animate()
-		self.ani = animation.FuncAnimation(self.figure, self.graph_animate, interval=self.samplingInterval*1000)
 
 	def graph_animate(self, *args):
 		print("Updating graph...")
@@ -66,16 +66,13 @@ class TemperatureDisplay(tk.Frame):
 		self.ax.clear()
 		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 		self.ax.plot(xar,self.last_wbgt_readings)
+		self.controller.after(self.samplingInterval*1000, self.graph_animate)
+
 
 	def get_sampling_interval(self):
 		return self.samplingInterval
 
 	def set_sampling_interval(self, samplingInverval):
-		# TODO: Fix this so it works
 		self.samplingInterval = samplingInverval
-		print(self.samplingInterval)
-		print(self.ani.event_source.interval)
-		self.ani.event_source.interval = self.samplingInterval*1000
-		print(self.ani.event_source.interval)
 
 
