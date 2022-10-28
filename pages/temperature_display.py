@@ -20,9 +20,8 @@ import modules.colors as colors
 
 class TemperatureDisplay(ttk.Frame):
 	controller = None
-	figure = None
+	canvas = None
 	ax = None
-	ani = None
 	sensorLabels = []
 	samplingInterval = 1
 	wbgtLabel = None
@@ -46,12 +45,12 @@ class TemperatureDisplay(ttk.Frame):
 		settingsButton.grid(row=0, column=4)
 
 		# setup WBGTI graph
-		self.figure = Figure(figsize=(7,4), dpi=100)
-		self.ax = self.figure.add_subplot(111)
+		figure = Figure(figsize=(7,4), dpi=100)
+		self.ax = figure.add_subplot(111)
 
-		canvas = FigureCanvasTkAgg(self.figure, self)
-		canvas.figure.tight_layout()
-		canvas.get_tk_widget().grid(column=0, row=1, columnspan=5, padx=15, pady=10)
+		self.canvas = FigureCanvasTkAgg(figure, self)
+		self.canvas.figure.tight_layout()
+		self.canvas.get_tk_widget().grid(column=0, row=1, columnspan=5, padx=15, pady=10)
 
 		# TODO: Edit interval (ms) to change sample rate
 		self.graph_animate()
@@ -68,11 +67,11 @@ class TemperatureDisplay(ttk.Frame):
 		# Update wbgt label
 		self.wbgtLabel.configure(text="WBGT:\n{:.2f}℃".format(wbgtValue))
 		# Calculate what color line should be
-		if (wbgtValue <= 25):
+		if (wbgtValue < 25):
 			line_color = colors.green
-		elif (wbgtValue > 25 or wbgtValue <= 28):
+		elif (wbgtValue >= 25 and wbgtValue < 28):
 			line_color = colors.yellow
-		elif (wbgtValue > 28 or wbgtValue <= 31):
+		elif (wbgtValue >= 28 and wbgtValue < 31):
 			line_color = colors.orange
 		else:
 			line_color = colors.red
@@ -83,6 +82,7 @@ class TemperatureDisplay(ttk.Frame):
 		self.ax.clear()
 		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 		self.ax.plot(xar, self.last_wbgt_readings,  color=line_color)
+		self.canvas.draw()
 		self.controller.after(self.samplingInterval*1000, self.graph_animate)
 
 
