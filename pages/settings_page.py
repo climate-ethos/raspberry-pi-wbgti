@@ -1,8 +1,10 @@
 from tkinter import ttk
+from components.keypad import Keypad
 
 class SettingsPage(ttk.Frame):
 	controller = None
 	intervalInput = None
+	keypad = None
 
 	def __init__(self, parent, controller) -> None:
 		ttk.Frame.__init__(self, parent)
@@ -20,7 +22,16 @@ class SettingsPage(ttk.Frame):
 		backButton = ttk.Button(self, text="Back", command=self.save_and_return)
 		backButton.grid(row=0, column=0)
 
+		# Define keypad
+		self.keypad = Keypad(self)
+		# Bind keypad to whatever is focused
+		self.bind("<FocusIn>", self.on_focus)
+
 	def save_and_return(self):
 		newSamplingInterval = int(self.intervalInput.get())
 		self.controller.get_frame("TemperatureDisplay").set_sampling_interval(newSamplingInterval)
 		self.controller.show_frame("TemperatureDisplay")
+
+	def on_focus(self, event):
+		focusedInput = self.focus_get()
+		self.keypad.show(focusedInput)
