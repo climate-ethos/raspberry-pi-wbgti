@@ -1,5 +1,6 @@
 import collections
 from tkinter import ttk
+import tkinter as tk
 import numpy as np
 
 import matplotlib
@@ -25,6 +26,7 @@ class TemperatureDisplay(ttk.Frame):
 	sensorLabels = []
 	samplingInterval = 1
 	wbgtLabel = None
+	wbgtFrame = None
 	last_wbgt_readings = collections.deque([np.nan] * 10, maxlen=10)
 
 	def __init__(self, parent, controller) -> None:
@@ -37,8 +39,12 @@ class TemperatureDisplay(ttk.Frame):
 			self.sensorLabels.append(label)
 
 		# WBGTI display
-		self.wbgtLabel = ttk.Label(self, borderwidth=1, relief="solid", padding=10)
-		self.wbgtLabel.grid(row=0, column=3)
+		# Create a Frame for border
+		self.wbgtFrame = tk.Frame(self, background="white")
+		# Place the widgets with border Frame
+		self.wbgtLabel = ttk.Label(self.wbgtFrame, padding=10)
+		self.wbgtLabel.pack(padx=2, pady=2)
+		self.wbgtFrame.grid(row=0, column=3)
 
 		# Settings button
 		settingsButton = ttk.Button(self, text="Settings", command=lambda: controller.show_frame("SettingsPage"))
@@ -82,6 +88,7 @@ class TemperatureDisplay(ttk.Frame):
 		self.ax.clear()
 		self.ax.yaxis.set_major_formatter(FormatStrFormatter('%.2f'))
 		self.ax.plot(xar, self.last_wbgt_readings,  color=line_color)
+		self.wbgtFrame.configure(background=line_color)
 		self.canvas.draw()
 		self.controller.after(self.samplingInterval*1000, self.graph_animate)
 
