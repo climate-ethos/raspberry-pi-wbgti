@@ -11,7 +11,7 @@ class Root(tk.Tk):
 		self.title("WBGTI")
 		self.tk.call("source", "theme/azure.tcl")
 		self.tk.call("set_theme", "dark")
-		# self.attributes("-fullscreen", True)
+		self.attributes("-fullscreen", True)
 
 		container = ttk.Frame(self, padding=10)
 		container.pack(side="top", fill="both", expand = True)
