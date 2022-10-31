@@ -1,5 +1,7 @@
 # raspberry-pi-wbgti
 
+This project aims to take a raspberry pi, combined with some external temperature probes to create a GUI for a wbgt index sensor.
+
 ## Installation/Setup
 
 RPI = Raspberry Pi
